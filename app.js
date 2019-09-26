@@ -1,7 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
 const layout = require("./views/layout");
-const {db} = require('./models/index');
+const {db} = require('./models');
+const {User} = require("./models/index")
+const {Page} = require("./models/index")
 
 const app = express()
 app.use(morgan('dev'));
@@ -18,10 +20,9 @@ db.authenticate({logging: false}).
 then(() => {
   console.log('connected to the database');
 })
- await db.sync();
+
 const init = async () => {
-  await db.User.async()
-  await db.Page.async()
+  await db.sync()
 
   const PORT = 1000;
   app.listen(PORT, () => {
